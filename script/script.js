@@ -1,23 +1,25 @@
 var _AMOUNT_QUESTIONS = 1;
 
-var _GETALLCATEGORIES_LINK = "https://opentdb.com/api_category.php";
-var _GETQUESTION_LINK = "https://opentdb.com/api.php?amount=" + _AMOUNT_QUESTIONS;
+var _GETALLCATEGORIES_LINK = 'https://opentdb.com/api_category.php';
+var _GETQUESTION_LINK = 'https://opentdb.com/api.php?amount=' + _AMOUNT_QUESTIONS;
 
-var cboCategory;
-var cboDifficulty;
-var cboType;
-var btnShoot;
-var btnPrefs;
-var divPrefs;
+var cboCategory,
+	cboDifficulty,
+	cboType,
+	btnShoot,
+	btnPrefs,
+	sectPrefs,
+	sectQuestions;
 
 // SETUP
 function GetElements(){
-	cboCategory = $("#cboCategory");
-	cboDifficulty = $("#cboDifficulty");
-	cboType = $("#cboType");
-	btnShoot = $("#btnShoot");
-	btnPrefs = $("#btnPrefs");
-	divPrefs = $(".preferences");
+	cboCategory = $('#cboCategory');
+	cboDifficulty = $('#cboDifficulty');
+	cboType = $('#cboType');
+	btnShoot = $('#btnShoot');
+	btnPrefs = $('#btnPrefs');
+	sectPrefs = $('.main__content__preferences');
+	sectQuestions = $('.main__content__question');
 }
 
 // CATEGORIES
@@ -28,7 +30,7 @@ function SetupCategories(requestLink){
 }
 
 function ShowCategories(categoriesData){
-	var categories = categoriesData["trivia_categories"];
+	var categories = categoriesData['trivia_categories'];
 	categories = SortCategories(categories);
 
 	FillCategoriesComboBox(categories);
@@ -56,17 +58,6 @@ function FillCategoriesComboBox(categories) {
 	}
 	cboCategory.append(itemval);​
 }
-
-function GetTriviaAPIUrl(properties) {
-	var triviaQuestionAPIUrl = _GETQUESTION_LINK;
-	for(var property in properties) {
-		if(properties[property] != '') {
-			triviaQuestionAPIUrl += '&' + property + '=' + properties[property]; 
-		}
-	}
-
-	return triviaQuestionAPIUrl;
-}
 // END CATEGORIES
 
 // QUESTIONS
@@ -76,7 +67,39 @@ function Shoot(){
 		difficulty: cboDifficulty.val(),
 		type: cboType.val()
 	};
-	console.log(GetTriviaAPIUrl(properties));
+	
+	var question = GetQuestion(GetUrlQuestion(properties));
+	ShowQuestion(question);
+}
+
+function GetUrlQuestion(properties) {
+	var url = _GETQUESTION_LINK;
+	for (var property in properties) {
+		if (properties[property] != '') {
+			url += '&' + property + '=' + properties[property];
+		}
+	}
+
+	console.log(url);
+	return url;
+}
+
+function GetQuestion(requestLink) {
+	$.getJSON(requestLink, function (data) {
+		if (data['response_code'] == 0){
+			// SUCCES
+			return data;
+		}
+		else{
+			// OTHER STATUS CODE
+			console.log("Error, try again");
+			return null;
+		}
+	})
+}
+
+function ShowQuestion(question) {
+	sectQuestions.append("<p>Test</p>");
 }
 
 
@@ -84,10 +107,10 @@ function Shoot(){
 
 // MISC
 function ShowPreferences(){
-	if ( divPrefs.css('visibility') == 'hidden' )
-		divPrefs.css('visibility','visible');
+	if ( sectPrefs.css('visibility') == 'hidden' )
+		sectPrefs.css('visibility','visible');
 	else
-		divPrefs.css('visibility','hidden');
+		sectPrefs.css('visibility','hidden');
 }
 
 document.addEventListener( 'DOMContentLoaded', function() {
