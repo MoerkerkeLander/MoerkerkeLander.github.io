@@ -1,0 +1,11 @@
+fonts:
+	- #Here starts font declaration
+		family:	Raleway
+		variants:
+			- 300
+			- 300i
+			- 400
+			- 500
+			- 900
+		subsets:
+			- latin

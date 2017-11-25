@@ -6,13 +6,24 @@ var gulp = require('gulp'),
 	cleancss = require('gulp-clean-css'),
 	uglify = require('gulp-uglify'),
 	rename = require('gulp-rename'),
-	jquery = require('jquery');
+	jquery = require('jquery'),
+	ggf = require('gulp-google-fonts');
 
-gulp.task('sass', function(){
-	gulp.src('style/screen.scss')
-    	.pipe(sass().on('error', sass.logError))
-    	.pipe(cleancss())
-    	.pipe(gulp.dest('./dist/style'));
+gulp.task('font', function () {
+	return gulp.src('config_fonts.neon')
+		.pipe(ggf())
+		.pipe(gulp.dest('fonts'));
+});
+
+gulp.task('css', function(){
+	gulp.src([
+		'fonts/*.css',
+		'style/screen.scss'
+	])
+	.pipe(sass().on('error', sass.logError))
+	.pipe(concat('screen.min.css'))
+	.pipe(cleancss())
+	.pipe(gulp.dest('./dist/style'));
 });
 
 gulp.task('script', function () {
@@ -38,7 +49,7 @@ gulp.task('js', function() {
 });
 
 gulp.task('default', function(){
-	gulp.watch('style/*.scss', ['sass']);
+	gulp.watch(['style/*.scss', 'fonts/*.css'], ['css']);
 	gulp.watch('script/*.js', ['script']);
 	jquery.help;
 });
