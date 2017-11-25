@@ -1,9 +1,11 @@
-var _AMOUNT_QUESTIONS = 1;
+// API SETTINGS
+let _AMOUNT_QUESTIONS = 1;
 
-var _GETALLCATEGORIES_LINK = 'https://opentdb.com/api_category.php';
-var _GETQUESTION_LINK = 'https://opentdb.com/api.php?amount=' + _AMOUNT_QUESTIONS;
+let _GETALLCATEGORIES_LINK = 'https://opentdb.com/api_category.php';
+let _GETQUESTION_LINK = 'https://opentdb.com/api.php?amount=' + _AMOUNT_QUESTIONS;
 
-var cboCategory,
+// ELEMENTS
+let cboCategory,
 	cboDifficulty,
 	cboType,
 	btnShoot,
@@ -30,7 +32,7 @@ function SetupCategories(requestLink){
 }
 
 function ShowCategories(categoriesData){
-	var categories = categoriesData['trivia_categories'];
+	let categories = categoriesData['trivia_categories'];
 	categories = SortCategories(categories);
 
 	FillCategoriesComboBox(categories);
@@ -50,8 +52,8 @@ function SortCategories(unsortedCategories) {
 }
 
 function FillCategoriesComboBox(categories) {
-	var itemval;
-	for (var i = categories.length - 1; i >= 0; i--) {
+	let itemval;
+	for (let i = categories.length - 1; i >= 0; i--) {
 		if (i !== undefined){
 			itemval += '<option value="' + categories[i]['id'] + '">' + categories[i]['name'] + '</option>';
 		}
@@ -62,19 +64,18 @@ function FillCategoriesComboBox(categories) {
 
 // QUESTIONS
 function Shoot(){
-	var properties = {
+	let properties = {
 		category: cboCategory.val(),
 		difficulty: cboDifficulty.val(),
 		type: cboType.val()
 	};
 	
-	var question = GetQuestion(GetUrlQuestion(properties));
-	ShowQuestion(question);
+	GetQuestion(GetUrlQuestion(properties));
 }
 
 function GetUrlQuestion(properties) {
-	var url = _GETQUESTION_LINK;
-	for (var property in properties) {
+	let url = _GETQUESTION_LINK;
+	for (let property in properties) {
 		if (properties[property] != '') {
 			url += '&' + property + '=' + properties[property];
 		}
@@ -88,7 +89,7 @@ function GetQuestion(requestLink) {
 	$.getJSON(requestLink, function (data) {
 		if (data['response_code'] == 0){
 			// SUCCES
-			return data;
+			ShowQuestion(data['results']);
 		}
 		else{
 			// OTHER STATUS CODE
@@ -98,8 +99,18 @@ function GetQuestion(requestLink) {
 	})
 }
 
-function ShowQuestion(question) {
-	sectQuestions.append("<p>Test</p>");
+function ShowQuestion(questions) {
+	console.log(questions);
+	let question = questions[0];
+
+	
+	if (questions['type'] == 'multiple') {
+		
+	}
+	else{
+
+	}
+	sectQuestions.append('<p>' + question['question'] + '</p>');
 }
 
 
