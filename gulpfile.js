@@ -28,11 +28,10 @@ gulp.task('css', function(){
 
 gulp.task('script', function () {
     gulp.src([
-    	'node_modules/jquery/dist/jquery.js',
-        'node_modules/bootstrap/dist/js/bootstrap.js',
+		'node_modules/jquery/dist/jquery.js',
     	'script/*.js'
     ])
-    .pipe(uglify())
+    // .pipe(uglify())
     .pipe(concat('script.min.js'))
     .pipe(gulp.dest('./dist/script'));
 });
@@ -40,7 +39,6 @@ gulp.task('script', function () {
 gulp.task('js', function() {
     gulp.src([
             'node_modules/jquery/dist/jquery.js',
-            'node_modules/bootstrap/dist/js/bootstrap.js',
             'src/js/**/*.js'
         ])
         .pipe(uglify())
