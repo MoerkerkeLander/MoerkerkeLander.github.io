@@ -1,37 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
 	<title>The Trivial Game</title>
 	<link rel="stylesheet" href="style/screen.min.css">
 	<script src="script/script.min.js"></script>
 </head>
+
 <body>
 	<main class="main__content">
+		<header class="header__navigation">
+			<div class="header__logo">
+				<img src="src/logo.png" alt="logo The Trivial Game">
+			</div>
+			<div class="header__slogan">
+				<h1>Test your knowledge about everything and beat your highscore!</h1>
+			</div>
+		</header>
+
 		<section class="main__content__buttons">
-			<button id="btnShoot">Shoot</button>
-			<button id="btnPrefs">Show preferences</button>
+			<div>
+				<button id="btnShoot">Shoot</button>
+				<button id="btnPrefs">Preferences</button>
+			</div>
 		</section>
 		<section class="main__content__preferences">
-			<select id="cboCategory" name="cboCategory">
-				<option value="" selected>- Any -</option>
-			</select>
-			<select id="cboDifficulty" name="cboDifficulty">
-				<option value="" selected>- Any -</option>
-				<option value="easy"> Easy </option>
-				<option value="medium"> Medium </option>
-				<option value="hard"> Hard </option>
-			</select>
-			<select id="cboType" name="cboType">
-				<option value="" selected>- Any -</option>
-				<option value="multiple"> Mulitple Choice </option>
-				<option value="boolean"> True/False </option>
-			</select>
+			<div class="preferences__holder">
+				<label for="cboCategory">Category</label>
+				<select id="cboCategory" name="cboCategory">
+					<option value="" selected>- Any -</option>
+				</select>
+			</div>
+			<div class="preferences__holder">
+				<label for="cboDifficulty">Difficulty</label>
+				<select id="cboDifficulty" name="cboDifficulty">
+					<option value="" selected>- Any -</option>
+					<option value="easy"> Easy </option>
+					<option value="medium"> Medium </option>
+					<option value="hard"> Hard </option>
+				</select>
+			</div>
+			<div class="preferences__holder">
+				<label for="cboType">Type</label>
+				<select id="cboType" name="cboType">
+					<option value="" selected>- Any -</option>
+					<option value="multiple"> Mulitple Choice </option>
+					<option value="boolean"> True/False </option>
+				</select>
+			</div>
 		</section>
 		<section class="main__content__question">
-			
 		</section>
 	</main>
+	<footer>
+		&copy; Lander Moerkerke
+	</footer>
 </body>
+
 </html>

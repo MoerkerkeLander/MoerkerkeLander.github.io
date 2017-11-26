@@ -1,0 +1,94 @@
+/* 
+POSITIONING
+BOX-MODEL
+FONTS
+APPEARANCE
+OTHER 
+*/
+.main__content{
+    width: 63%;
+    position: relative;
+    top: 100px;
+    
+    margin: auto;
+    padding: 20px 0 50px 0;
+    
+    background: linear-gradient($ctTop, $ctBottom);
+    border-radius: 15px;
+
+    -webkit-box-shadow: 0px 0px 105px 5px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 105px 5px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 105px 5px rgba(0,0,0,0.75);
+
+
+    @media screen and ( max-width: 1200px ) {
+        &{
+            width: 80%;
+        }
+    }
+
+    @media screen and ( max-width: 900px ) {
+        &{
+            width: 90%;
+        }
+    }
+
+    @media screen and ( max-width: 560px ) {
+        &{
+            position: static;
+            border-radius: 0;
+            width: 100%;
+            height: auto;
+        }
+    }
+}
+
+
+.main__content__buttons{
+    display: flex;
+    
+    padding: 40px 0;
+
+    div{
+        margin: 0 auto;
+    }
+
+
+    button{
+        vertical-align: top;
+        height: 50px;
+    }
+
+    button:hover{
+        cursor: pointer; 
+    }
+
+    #btnShoot{
+        text-transform: uppercase;
+        width: 150px;
+        
+        background-color: $btnShootF;
+        border: 1px solid $btnShootS;
+        border-radius: 10px;
+        
+        color: $white;
+        font-family: Raleway;
+        font-weight: 500;
+        font-size: 1.5em;
+        
+    }
+
+    #btnPrefs{
+        width: 50px;
+        
+        font-size: 0;
+        
+        background: url(../src/cog.png) no-repeat center center;
+        background-color: $btnPrefsF;
+        border: 1px solid $btnPrefsS;
+        border-radius: 10px;
+    }
+}
+
+
+// .main__content__question{}

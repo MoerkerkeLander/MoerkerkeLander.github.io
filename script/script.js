@@ -14,7 +14,7 @@ let cboCategory,
 	sectQuestions;
 
 // SETUP
-function GetElements(){
+function GetElements() {
 	cboCategory = $('#cboCategory');
 	cboDifficulty = $('#cboDifficulty');
 	cboType = $('#cboType');
@@ -25,13 +25,13 @@ function GetElements(){
 }
 
 // CATEGORIES
-function SetupCategories(requestLink){
-	$.getJSON(requestLink, function(data){
+function SetupCategories(requestLink) {
+	$.getJSON(requestLink, function (data) {
 		ShowCategories(data);
 	})
 }
 
-function ShowCategories(categoriesData){
+function ShowCategories(categoriesData) {
 	let categories = categoriesData['trivia_categories'];
 	categories = SortCategories(categories);
 
@@ -39,7 +39,7 @@ function ShowCategories(categoriesData){
 }
 
 function SortCategories(unsortedCategories) {
-	function compare(a,b) {
+	function compare(a, b) {
 		if (a.name < b.name)
 			return 1;
 		if (a.name > b.name)
@@ -54,22 +54,22 @@ function SortCategories(unsortedCategories) {
 function FillCategoriesComboBox(categories) {
 	let itemval;
 	for (let i = categories.length - 1; i >= 0; i--) {
-		if (i !== undefined){
+		if (i !== undefined) {
 			itemval += '<option value="' + categories[i]['id'] + '">' + categories[i]['name'] + '</option>';
 		}
 	}
-	cboCategory.append(itemval);​
+	cboCategory.append(itemval);
 }
 // END CATEGORIES
 
 // QUESTIONS
-function Shoot(){
+function Shoot() {
 	let properties = {
 		category: cboCategory.val(),
 		difficulty: cboDifficulty.val(),
 		type: cboType.val()
 	};
-	
+
 	GetQuestion(GetUrlQuestion(properties));
 }
 
@@ -87,11 +87,11 @@ function GetUrlQuestion(properties) {
 
 function GetQuestion(requestLink) {
 	$.getJSON(requestLink, function (data) {
-		if (data['response_code'] == 0){
+		if (data['response_code'] == 0) {
 			// SUCCES
 			ShowQuestion(data['results']);
 		}
-		else{
+		else {
 			// OTHER STATUS CODE
 			console.log("Error, try again");
 			return null;
@@ -103,11 +103,11 @@ function ShowQuestion(questions) {
 	console.log(questions);
 	let question = questions[0];
 
-	
+
 	if (questions['type'] == 'multiple') {
-		
+
 	}
-	else{
+	else {
 
 	}
 	sectQuestions.append('<p>' + question['question'] + '</p>');
@@ -117,14 +117,18 @@ function ShowQuestion(questions) {
 // END QUESTIONS
 
 // MISC
-function ShowPreferences(){
-	if ( sectPrefs.css('visibility') == 'hidden' )
-		sectPrefs.css('visibility','visible');
-	else
-		sectPrefs.css('visibility','hidden');
+let boolShowPrefs;
+function ShowPreferences() {
+	if (boolShowPrefs) {
+		sectPrefs.css('display', 'none');
+	}
+	else {
+		sectPrefs.css('display', 'flex');
+	}
+	boolShowPrefs = !boolShowPrefs
 }
 
-document.addEventListener( 'DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 	console.log("Ready!");
 	GetElements();
 	SetupCategories(_GETALLCATEGORIES_LINK);
