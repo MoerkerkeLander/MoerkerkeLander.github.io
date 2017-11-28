@@ -1,17 +1,19 @@
 // API SETTINGS
-let _AMOUNT_QUESTIONS = 1;
+var _AMOUNT_QUESTIONS = 1;
 
-let _GETALLCATEGORIES_LINK = 'https://opentdb.com/api_category.php';
-let _GETQUESTION_LINK = 'https://opentdb.com/api.php?amount=' + _AMOUNT_QUESTIONS;
+var _GETALLCATEGORIES_LINK = 'https://opentdb.com/api_category.php';
+var _GETQUESTION_LINK = 'https://opentdb.com/api.php?amount=' + String(_AMOUNT_QUESTIONS);
 
 // ELEMENTS
-let cboCategory,
+var cboCategory,
 	cboDifficulty,
 	cboType,
 	btnShoot,
 	btnPrefs,
 	sectPrefs,
-	sectQuestions;
+	sectQuestions,
+	homepageContainer,
+	answersContainer;
 
 // SETUP
 function GetElements() {
@@ -22,6 +24,8 @@ function GetElements() {
 	btnPrefs = $('#btnPrefs');
 	sectPrefs = $('.main__content__preferences');
 	sectQuestions = $('.main__content__question');
+	homepageContainer = $('.main__content__conainer');
+	answersContainer = $('.main__content__answers');
 }
 
 // CATEGORIES
@@ -32,7 +36,7 @@ function SetupCategories(requestLink) {
 }
 
 function ShowCategories(categoriesData) {
-	let categories = categoriesData['trivia_categories'];
+	var categories = categoriesData['trivia_categories'];
 	categories = SortCategories(categories);
 
 	FillCategoriesComboBox(categories);
@@ -52,8 +56,8 @@ function SortCategories(unsortedCategories) {
 }
 
 function FillCategoriesComboBox(categories) {
-	let itemval;
-	for (let i = categories.length - 1; i >= 0; i--) {
+	var itemval;
+	for (var i = categories.length - 1; i >= 0; i--) {
 		if (i !== undefined) {
 			itemval += '<option value="' + categories[i]['id'] + '">' + categories[i]['name'] + '</option>';
 		}
@@ -64,7 +68,7 @@ function FillCategoriesComboBox(categories) {
 
 // QUESTIONS
 function Shoot() {
-	let properties = {
+	var properties = {
 		category: cboCategory.val(),
 		difficulty: cboDifficulty.val(),
 		type: cboType.val()
@@ -74,8 +78,8 @@ function Shoot() {
 }
 
 function GetUrlQuestion(properties) {
-	let url = _GETQUESTION_LINK;
-	for (let property in properties) {
+	var url = _GETQUESTION_LINK;
+	for (var property in properties) {
 		if (properties[property] != '') {
 			url += '&' + property + '=' + properties[property];
 		}
@@ -100,24 +104,44 @@ function GetQuestion(requestLink) {
 }
 
 function ShowQuestion(questions) {
-	console.log(questions);
-	let question = questions[0];
+	homepageContainer.css('display', 'none');
+	$('.header__slogan').css('display', 'none');
+	$('.main__content__answers').css('display', 'grid');
+	$('.main__content__question').css('display', 'block');
+	var question = questions[0];
+	// add question
+	sectQuestions.append('<div class="question__card"><p class="question__card__category">' + question['category']  + '</p><p class="question__card__question">' + question['question'] + '</p></div>');
 
 
-	if (questions['type'] == 'multiple') {
-
+	if (question['type'] == "multiple") {
+		var answers = question['incorrect_answers'];
+		answers.push(question['correct_answer']);
+	
+		for (var index = 0; index < answers.length; index++) {
+			answersContainer.append('<button>' + answers[index] + '</button>');			
+		}
+		// for (var i = ul.children.length; i >= 0; i--) {
+		// 	ul.appendChild(ul.children[Math.random() * i | 0]);
+		// }
+		// question[''].forEach(element => {
+			
+		// });
+		// answersContainer.append('<button>''</button>')
 	}
 	else {
+		var answers = question['incorrect_answers'];
+		answers.push(question['correct_answer']);
 
+		for (var index = 0; index < answers.length; index++) {
+			answersContainer.append('<button>' + answers[index] + '</button>');
+		}
 	}
-	sectQuestions.append('<p>' + question['question'] + '</p>');
 }
-
 
 // END QUESTIONS
 
-// MISC
-let boolShowPrefs;
+// PREFERENCES
+var boolShowPrefs;
 function ShowPreferences() {
 	if (boolShowPrefs) {
 		sectPrefs.css('display', 'none');
