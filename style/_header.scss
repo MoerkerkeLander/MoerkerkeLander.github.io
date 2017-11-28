@@ -1,5 +1,12 @@
 .header__navigation{
     margin: 10px 10px;
+
+    @media screen and ( max-width: 560px ) {
+        &{
+            margin: 0;
+            padding: 0;
+        }
+    }
 }
 
 .header__logo{
@@ -10,6 +17,14 @@
         margin: 0 auto;
 		display: block;
     }
+
+    @media screen and ( max-width: 560px ) {
+        &{
+            margin: 0;
+            
+        }
+    }
+
     @media screen and ( max-width: 350px ) {
         &{
             margin: 0;
