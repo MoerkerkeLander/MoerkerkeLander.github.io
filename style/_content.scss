@@ -11,15 +11,16 @@ OTHER
     top: 100px;
     
     margin: auto;
-    padding: 20px 0 0px 0;
+    padding: 20px 0 40px 0;
     
     background: linear-gradient($ctTop, $ctBottom);
+    // background: linear-gradient($sccTop, $sccBottom);
+    // background: linear-gradient(#0069F5,#1f9400);
     border-radius: 15px;
 
     -webkit-box-shadow: 0px 0px 105px 5px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 105px 5px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 105px 5px rgba(0,0,0,0.75);
-
 
     @media screen and ( max-width: 1200px ) {
         &{
@@ -35,15 +36,17 @@ OTHER
 
     @media screen and ( max-width: 560px ) {
         &{
+            min-height: 100%;
             position: static;
             width: 100%;
-            height: 100%;
+            height: auto;
             
             margin: 0;
             padding: 0;
 
             border-radius: 0;
         }
+
     }
 }
 

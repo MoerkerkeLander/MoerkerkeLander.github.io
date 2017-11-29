@@ -10,6 +10,7 @@ var cboCategory,
 	cboType,
 	btnShoot,
 	btnPrefs,
+	headerSlogan,
 	sectPrefs,
 	sectQuestions,
 	homepageContainer,
@@ -22,6 +23,7 @@ function GetElements() {
 	cboType = $('#cboType');
 	btnShoot = $('#btnShoot');
 	btnPrefs = $('#btnPrefs');
+	headerSlogan = $('.header__slogan');
 	sectPrefs = $('.main__content__preferences');
 	sectQuestions = $('.main__content__question');
 	homepageContainer = $('.main__content__conainer');
@@ -66,6 +68,19 @@ function FillCategoriesComboBox(categories) {
 }
 // END CATEGORIES
 
+// PREFERENCES
+var boolShowPrefs;
+function ShowPreferences() {
+	if (boolShowPrefs) {
+		sectPrefs.css('display', 'none');
+	}
+	else {
+		sectPrefs.css('display', 'flex');
+	}
+	boolShowPrefs = !boolShowPrefs
+}
+
+
 // QUESTIONS
 function Shoot() {
 	var properties = {
@@ -93,7 +108,17 @@ function GetQuestion(requestLink) {
 	$.getJSON(requestLink, function (data) {
 		if (data['response_code'] == 0) {
 			// SUCCES
-			ShowQuestion(data['results']);
+
+			// homepageContainer.css('display', 'none');
+			changeDisplayProperty(homepageContainer, 'none');
+			// $('.header__slogan').css('display', 'none');
+			changeDisplayProperty(headerSlogan, 'none');
+			// $('.main__content__answers').css('display', 'grid');
+			changeDisplayProperty($('.main__content__answers'), 'grid');
+			// $('.main__content__question').css('display', 'block');
+			changeDisplayProperty($('.main__content__question'), 'block');
+			
+			showQuestion(data['results']);			
 		}
 		else {
 			// OTHER STATUS CODE
@@ -103,53 +128,71 @@ function GetQuestion(requestLink) {
 	})
 }
 
-function ShowQuestion(questions) {
-	homepageContainer.css('display', 'none');
-	$('.header__slogan').css('display', 'none');
-	$('.main__content__answers').css('display', 'grid');
-	$('.main__content__question').css('display', 'block');
+function showQuestion(questions) {
 	var question = questions[0];
-	// add question
+	// SHOW CATEGORY
 	sectQuestions.append('<div class="question__card"><p class="question__card__category">' + question['category']  + '</p><p class="question__card__question">' + question['question'] + '</p></div>');
 
-
+	
 	if (question['type'] == "multiple") {
 		var answers = question['incorrect_answers'];
 		answers.push(question['correct_answer']);
-	
-		for (var index = 0; index < answers.length; index++) {
-			answersContainer.append('<button>' + answers[index] + '</button>');			
-		}
-		// for (var i = ul.children.length; i >= 0; i--) {
-		// 	ul.appendChild(ul.children[Math.random() * i | 0]);
-		// }
-		// question[''].forEach(element => {
-			
-		// });
-		// answersContainer.append('<button>''</button>')
-	}
-	else {
-		var answers = question['incorrect_answers'];
-		answers.push(question['correct_answer']);
+		answers.sort();
 
 		for (var index = 0; index < answers.length; index++) {
-			answersContainer.append('<button>' + answers[index] + '</button>');
+			createButtonAnswer(answers[index], answersContainer);
 		}
 	}
+	else {
+		createButtonAnswer('True', answersContainer);
+		createButtonAnswer('False', answersContainer);	
+	}
+
+	$('.btnAnswer').on('click', function(e) {
+		checkQuestion(e.target.innerHTML, question['correct_answer']);
+	});
+}
+
+function createButtonAnswer(pText, pContainer){
+	pContainer.append('<button class="btnAnswer">' + pText + '</button>');
+}
+
+function checkQuestion(pSelected, pCorrect){
+	answersContainer.css('display', 'none');
+	sectQuestions.css('display', 'none');
+	if (pSelected == pCorrect) {
+		// hideQuestion();
+		console.log("juist");
+		showCorrect();
+	}
+	else {
+		console.log("fout");
+		// hideQuestion();
+		showIncorrect();
+	}
+}
+
+function hideQuestion(){
+	answersContainer.css('display', 'none');
+	sectQuestions.css('display', 'none');
 }
 
 // END QUESTIONS
 
-// PREFERENCES
-var boolShowPrefs;
-function ShowPreferences() {
-	if (boolShowPrefs) {
-		sectPrefs.css('display', 'none');
-	}
-	else {
-		sectPrefs.css('display', 'flex');
-	}
-	boolShowPrefs = !boolShowPrefs
+
+// SHOW SUCCESS
+function showCorrect(){
+
+}
+
+// SHOW FAIL
+function showIncorrect() {
+	
+}
+
+// VARIA
+function changeDisplayProperty(pElement, pDisplayValue) {
+	pElement.css('display', pDisplayValue);
 }
 
 document.addEventListener('DOMContentLoaded', function () {
