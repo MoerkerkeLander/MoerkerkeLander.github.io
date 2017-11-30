@@ -9,6 +9,7 @@ OTHER
     width: 63%;
     position: relative;
     top: 100px;
+    max-height: 75%;
     
     margin: auto;
     padding: 20px 0 40px 0;
@@ -46,7 +47,6 @@ OTHER
 
             border-radius: 0;
         }
-
     }
 }
 
@@ -59,22 +59,22 @@ OTHER
     div{
         margin: 0 auto;
     }
+}
 
+button{
+    vertical-align: top;
+    height: 50px;
 
-    button{
-        vertical-align: top;
-        height: 50px;
+    -webkit-box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.25);
+    -moz-box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.25);
+    box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.25);
+}
 
-        -webkit-box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.25);
-        -moz-box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.25);
-        box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.25);
-    }
+button:hover{
+    cursor: pointer; 
+}
 
-    button:hover{
-        cursor: pointer; 
-    }
-
-    #btnShoot{
+#btnShoot{
         text-transform: uppercase;
         width: 150px;
         
@@ -94,9 +94,9 @@ OTHER
         
         font-size: 0;
         
-        background: url(../src/cog.png) no-repeat center center;
+        background: url(../src/cog.svg) no-repeat center center;
+        background-size: 30px;
         background-color: $btnPrefsF;
         border: 1px solid $btnPrefsS;
         border-radius: 10px;
     }
-}

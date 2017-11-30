@@ -10,7 +10,7 @@
     margin: 0 auto;
     padding: 15px 30px;
     
-    background: $white;
+    background: url(../src/card.svg) no-repeat;
     
     align-items: center;
     box-sizing: border-box;
@@ -57,6 +57,8 @@
         &{
             height: auto;
             width: 85%;
+            
+            background: $white;
         }
     }
 }

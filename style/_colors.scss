@@ -11,9 +11,13 @@ $bgBottom : #1e1e1e;
 $ctTop : #00999E;
 $ctBottom : #005B97;
 
-$sccTop : #1f9400;
-$sccBottom : #006a12;
+// success
+$ccTop : #29CC46;
+$ccBottom : #247625;
 
+// failure
+$iccTop : rgb(252, 67, 54);
+$iccBottom : #c9291e;
 
 // BUTTONS (F -> fill, S -> stroke)
 $btnShootF : #FF4542;
