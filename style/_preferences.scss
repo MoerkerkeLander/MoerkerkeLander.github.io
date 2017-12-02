@@ -1,7 +1,7 @@
 .main__content__preferences{
-    position: relative;
-    // display: flex; (javascript toggle)
+	display: none;
     flex-direction: row;
+    position: relative;
     width: 55%;
 
     margin: 0 auto;
@@ -9,27 +9,25 @@
     
     background: #80B4CC;
     border: 1px solid $black;
+
     z-index: 999;
+}
 
+#btnClose{
+    position: absolute;
+    top: 5px;
+    right: 5px;
     
-    @media screen and ( max-width: 1600px ) {
-        &{ width: 75%; }
-    }
+    height: 25px;
+    width: 67px;
 
-    @media screen and ( max-width: 700px ) {
-        &{
-            width: 88%;
+    background: url(../src/close.svg) bottom right no-repeat;
 
-            padding: 40px 25px;
-        }
-    }
+    line-height: 25px;
+    font-weight: 500;
+    text-decoration: underline;
 
-    @media screen and ( max-width: 580px ) {
-        &{ 
-            flex-direction: column; 
-            padding: 5px 10px;
-        }
-    }
+    cursor: pointer; 
 }
 
 .preferences__holder{
@@ -66,18 +64,37 @@
         border-radius: 9px;
         -webkit-appearance: none;
     }
+}
 
-    @media screen and ( max-width: 580px ) {
-        &{ 
+@media screen and ( max-width: 1600px ) {
+    .main__content__preferences{ 
+        width: 75%; 
+    }
+}
+
+@media screen and ( max-width: 700px ) {
+    .main__content__preferences{
+        width: 88%;
+
+        padding: 40px 25px;
+    }
+}
+
+ @media screen and ( max-width: 580px ) {
+        .main__content__preferences{ 
+            flex-direction: column; 
+            padding: 30px 10px;
+        }
+
+        .preferences__holder{ 
             width: auto; 
             padding: 0;
             padding-bottom: 10px;
         }
 
-        label{
+        .preferences__holder label{
             font-size: 1.2rem;
 
             padding: 15px 0;
         }
     }
-}

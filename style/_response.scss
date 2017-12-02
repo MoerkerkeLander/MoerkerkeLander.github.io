@@ -1,60 +1,68 @@
+.correct{
+    background: linear-gradient($ccTop, $ccBottom);  
+}
+
+.incorrect{
+    background: linear-gradient($iccTop, $iccBottom);
+}
+
+.correct, .incorrect{
+    height: 100vh;
+
+    .header__logo img{
+        height: 200px;
+    }
+}
+
+@media screen and ( min-width: 581px ) {
+    .correct, .incorrect{
+        height: 740px;
+    }
+}
+
 .main__content__response{
     display: none;
+    margin: 25px auto;
+    width: 100%;
+   
     grid-gap: 30px;
-    margin: 20px auto;
 
-    p{
-        padding: 25px 0;
+    h1{
+        padding: 15px 0;
         color: $white;
-        text-align: center;
         font-weight: 800;
-        font-size: 2.6rem; 
         
-        line-height: 25px; 
-
-        @media screen and ( max-width: 560px ) {
-            &{
-                font-size: 2.3rem;
-            }
-        }
+        line-height: 55px; 
     }
+
     svg{
         margin: 0 auto;
-
-        width: 120px;
+        width: 100px;
 
         .svgcolor{
             fill: $white;
         }
     }
+}
+
+.btnNewQuestion{
+    height: 60px;
+    margin: 0px auto;
+    width: 300px;
+
+    background-color: #999999;
+    border: 1px solid #7B7B7B;
+    border-radius: 10px;
     
-    button{
-        height: 60px;
-        width: 300px;
-        
-        margin: 0px auto;
+    color: $black;
+    font-family: Raleway;
+    font-size: 1.5em;
+    font-weight: 500;
+    text-transform: inherit;
+}
 
-        text-transform: inherit;
-    }
-
+@media screen and ( max-width: 580px ) {
     .btnNewQuestion{
-        background-color: $btnShootF;
-        border: 1px solid $btnShootS;
-        border-radius: 10px;
-        
-        color: $white;
-        font-family: Raleway;
-        font-weight: 500;
-        font-size: 1.5em;
+        width: 95%;
     }
-}
-
-.correct{
-    background: linear-gradient($ccTop, $ccBottom);
-
-  
-}
-
-.incorrect{
-    background: linear-gradient($iccTop, $iccBottom);
 }

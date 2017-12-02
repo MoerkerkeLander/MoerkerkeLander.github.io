@@ -2,6 +2,12 @@
     display: none;
 }
 
+@media screen and ( max-width: 520px ) {
+    .main__content__question{
+        padding: 40px 0;
+    }
+}
+
 .question__card{
     display: grid;
     height: 250px;
@@ -26,14 +32,7 @@
         font-style: italic;  
 
         align-self: center;
-
-        @media screen and ( max-width: 520px ) {
-            &{
-                padding: 15px 0;
-            }
-        }
     }
-
 
     .question__card__question{
         margin: 5px auto;
@@ -44,21 +43,27 @@
     
         word-wrap: break-word;
 
-        align-self: start;
-        
-        @media screen and ( max-width: 520px ) {
-            &{
-                padding: 15px 0;
-            }
-        }
+        align-self: start;     
     }
+}
 
-    @media screen and ( max-width: 520px ) {
-        &{
-            height: auto;
-            width: 85%;
-            
-            background: $white;
-        }
+@media screen and ( max-width: 520px ) {
+    .question__card__category{
+        padding: 15px 0;
+    }
+}
+
+@media screen and ( max-width: 520px ) {
+    .question__card__question{
+        padding: 15px 0;
+    }
+}
+
+@media screen and ( max-width: 520px ) {
+    .question__card{
+        height: auto;
+        width: 85%;
+
+        background: $white;
     }
 }

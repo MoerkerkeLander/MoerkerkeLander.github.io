@@ -8,8 +8,17 @@ body{
 	height: 100%;
 }
 
-.main__content__preferences{
-	display: none;
+button{
+    vertical-align: top;
+    height: 50px;
+
+    -webkit-box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.25);
+    -moz-box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.25);
+    box-shadow: 0px 0px 15px 5px rgba(0,0,0,0.25);
+}
+
+button:hover{
+    cursor: pointer; 
 }
 
 footer{

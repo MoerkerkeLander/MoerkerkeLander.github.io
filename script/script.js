@@ -2,7 +2,7 @@
 var _AMOUNT_QUESTIONS = 5;
 
 var _GETALLCATEGORIES_LINK = 'https://opentdb.com/api_category.php';
-var _GETQUESTION_LINK = 'https://opentdb.com/api.php?amount=' + String(_AMOUNT_QUESTIONS);
+var _GETQUESTION_LINK = 'https://opentdb.com/api.php?amount=' + _AMOUNT_QUESTIONS;
 
 // ELEMENTS
 var cboCategory,
@@ -10,8 +10,11 @@ var cboCategory,
 	cboType,
 	btnShoot,
 	btnPrefs,
+	btnClose,
 	main__content,
+	header__navigation,
 	header__slogan,
+	main__content__buttons,
 	main__content__preferences,
 	main__content__question,
 	main__content__container,
@@ -19,7 +22,13 @@ var cboCategory,
 	main__content__response;
 
 // QUESTIONS
-var arrQuestions;
+var arrQuestions = [];
+var firstTime = true;
+
+// Responses
+responseCorr = ['Great, succes!', 'You‘re a real smart ass!', 'That‘s correct!', 'Hell yeah!', 'You are from another planet!'];
+responseInCorr = ['Let‘s pretend that never happened!', 'Oops, you pressed the wrong button!', 'Have you read the question properly?', 'Try again, dumbass.', 'Wrong answer!'];
+
 
 // SETUP
 function GetElements() {
@@ -28,15 +37,22 @@ function GetElements() {
 	cboType = $('#cboType');
 	btnShoot = $('#btnShoot');
 	btnPrefs = $('#btnPrefs');
+	btnClose = $('#btnClose');
 
 	// main, root
 	main__content = $('.main__content');
+
+	// header (logo + slogan)
+	header__navigation = $('.header__navigation');
 
 	// h1 in the header
 	header__slogan = $('.header__slogan');
 
 	// container buttons, select
 	main__content__container = $('.main__content__container');
+
+	// container of btnShoot and btnPrefs
+	main__content__buttons = $('.main__content__buttons');
 
 	// container of the selects
 	main__content__preferences = $('.main__content__preferences');
@@ -91,27 +107,51 @@ function FillCategoriesComboBox(categories) {
 // END CATEGORIES
 
 // PREFERENCES
-var boolShowPrefs;
 function ShowPreferences() {
-	if (boolShowPrefs) {
-		main__content__preferences.css('display', 'none');
+	main__content__preferences.css('display', 'flex');
+	main__content__buttons.css('display', 'none');
+
+	if ($(document).width() < 560) {
+		header__slogan.css('display', 'none');
 	}
-	else {
-		main__content__preferences.css('display', 'flex');
+}
+
+function ClosePreferences() {
+	main__content__preferences.css('display', 'none');
+	main__content__buttons.css('display', 'flex');
+	if ($(document).width() < 560) {
+		header__slogan.css('display', 'block');
 	}
-	boolShowPrefs = !boolShowPrefs
 }
 
 
 // QUESTIONS
 function Shoot() {
+	console.log(arrQuestions);
+	// if (arrQuestions.length < 2) {
+	// 	console.log("less then");
+	// 	GetQuestionsAndShow(GetUrlQuestion(properties));
+	// }else{
+	// 	console.log("more then");
+	// 	showQuestion();
+	// }	
+
 	var properties = {
 		category: cboCategory.val(),
 		difficulty: cboDifficulty.val(),
 		type: cboType.val()
 	};
 
-	GetQuestion(GetUrlQuestion(properties));
+	if (firstTime) {
+		GetQuestionsAndShow(GetUrlQuestion(properties));
+		firstTime = false;
+	}
+	else {
+		showQuestion();	
+		if (arrQuestions.length < 2) {
+			GetQuestions(GetUrlQuestion(properties));
+		}
+	}
 }
 
 function GetUrlQuestion(properties) {
@@ -122,21 +162,31 @@ function GetUrlQuestion(properties) {
 		}
 	}
 
-	console.log(url);
+	// console.log(url);
 	return url;
 }
 
-function GetQuestion(requestLink) {
+function GetQuestionsAndShow(requestLink) {
 	$.getJSON(requestLink, function (data) {
 		if (data['response_code'] == 0) {
 			// SUCCES
-			hideOtherContainersButQuestion();
-			arrQuestions = data['results'];
-			console.log(arrQuestions);
-			showQuestion(data['results']);			
+			arrQuestions = arrQuestions.concat(data['results']);
+			showQuestion();
 		}
 		else {
 			// OTHER STATUS CODE
+			console.log("Error, try again");
+			return null;
+		}
+	})
+}
+
+function GetQuestions(requestLink){
+	$.getJSON(requestLink, function (data) {
+		if (data['response_code'] == 0) {
+			arrQuestions = arrQuestions.concat(data['results']);
+		}
+		else {
 			console.log("Error, try again");
 			return null;
 		}
@@ -148,12 +198,18 @@ function hideOtherContainersButQuestion() {
 	changeDisplayProperty(header__slogan, 'none');
 	changeDisplayProperty($('.main__content__answers'), 'grid');
 	changeDisplayProperty($('.main__content__question'), 'block');
+
+	if ($(document).width() < 580) {
+		header__navigation.css('display', 'none');
+	}
 }
 
-function showQuestion(questions) {
-	var question = questions[0];
+function showQuestion() {
+	hideOtherContainersButQuestion();
+	var question = arrQuestions[0];
+
 	main__content__question.empty();
-	main__content__question.append('<div class="question__card"><p class="question__card__category">' + question['category']  + '</p><p class="question__card__question">' + question['question'] + '</p></div>');
+	main__content__question.append('<div class="question__card"><p class="question__card__category">' + question['category'] + '</p><p class="question__card__question">' + question['question'] + '</p></div>');
 
 	main__content__answers.empty();
 
@@ -168,73 +224,65 @@ function showQuestion(questions) {
 	}
 	else {
 		createButtonAnswer('True', main__content__answers);
-		createButtonAnswer('False', main__content__answers);	
+		createButtonAnswer('False', main__content__answers);
 	}
 
-	$('.btnAnswer').on('click', function(e) {
+	$('.btnAnswer').on('click', function (e) {
 		checkQuestion(e.target.innerHTML, question['correct_answer']);
 	});
 }
 
-function createButtonAnswer(pText, pContainer){
+function createButtonAnswer(pText, pContainer) {
 	pContainer.append('<button class="btnAnswer">' + pText + '</button>');
 }
 
-function checkQuestion(pSelected, pCorrect){
+function checkQuestion(pSelected, pCorrect) {
 	var text;
 	hideQuestion();
+	header__navigation.css('display', 'block');
 	main__content__response.empty();
+	main__content__response.css('display', 'grid');
+
 	if (pSelected == pCorrect) {
 		showCorrect();
 	}
 	else {
-		showCorrect();
+		showIncorrect();
 	}
 
 	$('.btnNewQuestion').click(newQuestion);
 }
 
-function hideQuestion(){
+function hideQuestion() {
 	main__content__answers.css('display', 'none');
 	main__content__question.css('display', 'none');
 }
 
 function newQuestion() {
-	// main__content__answers.remove();
-	// main__content__question.remove();
-	// main__content__preferences
-	// main__content__question
-	// main__content__container
-	// main__content__answers
-	// main__content__response
-
+	arrQuestions.shift();
 	main__content.removeClass('correct incorrect');
 	changeDisplayProperty(main__content__response, 'none');
 	Shoot();
-
 }
 // END QUESTIONS
 
 
 // SHOW SUCCESS
-function showCorrect(){
-	main__content__response.css('display', 'grid');
+function showCorrect() {
 	main__content__response.append(
 		$('<?xml version="1.0" encoding="UTF-8"?><svg viewBox="0 0 148.11 119.31" xmlns="http://www.w3.org/2000/svg"><defs><style>.svgcolor{fill:#cecece;}</style></defs><g data-name="Layer 2"><g data-name="Eindwerk"><g data-name="QuestionSucces"><polygon class="svgcolor" points="125.98 0 50.94 75.05 22.12 46.24 0 68.36 28.81 97.17 28.8 97.18 50.92 119.31 148.11 22.12"/></g></g></g></svg>'),
-		$('<p/>', { text: 'Great, succes!' }),
+		$('<h1/>', { text: getRandomResponse(responseCorr) }),
 		$('<button/>', { class: 'btnNewQuestion', text: 'New question!' })
 	);
-			
-	main__content.addClass('correct');	
+
+	main__content.addClass('correct');
 }
 
 // SHOW FAIL
 function showIncorrect() {
-	main__content__response.css('display', 'table');
-
 	main__content__response.append(
-		$('<?xml version="1.0" encoding="UTF-8"?><svg viewBox="0 0 119.7 120.7" xmlns="http://www.w3.org/2000/svg"><defs><style>.svgcolorIcc{fill:#aa1818;}</style></defs><title>Asset 10</title><g data-name="Layer 2"><g data-name="Eindwerk"><g data-name="QuestionSucces2"><polygon class="svgcolorIcc" points="119.7 23.13 97.57 1 60.35 38.22 22.13 0 0 22.13 38.22 60.35 0 98.57 22.13 120.7 60.35 82.48 97.57 119.7 119.7 97.57 82.48 60.35"/></g></g></g></svg>'),
-		$('<p/>', { text: 'Let‘s pretend that never happened!' }),
+		$('<?xml version="1.0" encoding="UTF-8"?><svg viewBox="0 0 119.7 120.7" xmlns="http://www.w3.org/2000/svg"><defs><style>.svgcolor{fill:#aa1818;}</style></defs><title>Asset 10</title><g data-name="Layer 2"><g data-name="Eindwerk"><g data-name="QuestionSucces2"><polygon class="svgcolor" points="119.7 23.13 97.57 1 60.35 38.22 22.13 0 0 22.13 38.22 60.35 0 98.57 22.13 120.7 60.35 82.48 97.57 119.7 119.7 97.57 82.48 60.35"/></g></g></g></svg>'),
+		$('<h1/>', { text: getRandomResponse(responseInCorr) }),
 		$('<button/>', { class: 'btnNewQuestion', text: 'Try again!' })
 	);
 
@@ -246,12 +294,18 @@ function changeDisplayProperty(pElement, pDisplayValue) {
 	pElement.css('display', pDisplayValue);
 }
 
+function getRandomResponse(pList){
+	var randomIndex = Math.floor(Math.random() * pList.length);
+	return pList[randomIndex];
+}
+
 document.addEventListener('DOMContentLoaded', function () {
-	console.log("Ready!");
+	console.log("Let's start, press the shoot button!");
 	GetElements();
 	SetupCategories(_GETALLCATEGORIES_LINK);
 
 	// button event listeners
 	btnShoot.click(Shoot);
 	btnPrefs.click(ShowPreferences);
+	btnClose.click(ClosePreferences);
 });
