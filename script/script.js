@@ -127,15 +127,6 @@ function ClosePreferences() {
 
 // QUESTIONS
 function Shoot() {
-	console.log(arrQuestions);
-	// if (arrQuestions.length < 2) {
-	// 	console.log("less then");
-	// 	GetQuestionsAndShow(GetUrlQuestion(properties));
-	// }else{
-	// 	console.log("more then");
-	// 	showQuestion();
-	// }	
-
 	var properties = {
 		category: cboCategory.val(),
 		difficulty: cboDifficulty.val(),
