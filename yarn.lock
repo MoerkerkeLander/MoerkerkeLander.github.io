@@ -977,6 +977,13 @@ gulp-connect@^5.0.0:
     gulp-util "^3.0.6"
     tiny-lr "^0.2.1"
 
+gulp-ga@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/gulp-ga/-/gulp-ga-0.0.8.tgz#194bd07d7edb1ee039a14125496c7e61be7aa29d"
+  dependencies:
+    gulp-util "^3.0.0"
+    through2 "^0.5.1"
+
 gulp-google-fonts@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/gulp-google-fonts/-/gulp-google-fonts-1.0.3.tgz#a54e0c9fcec0df6725633c4a9c9427394ef5f787"
@@ -2090,7 +2097,7 @@ read-pkg@^1.0.0:
     normalize-package-data "^2.3.2"
     path-type "^1.0.0"
 
-"readable-stream@>=1.0.33-1 <1.1.0-0":
+"readable-stream@>=1.0.33-1 <1.1.0-0", readable-stream@~1.0.17:
   version "1.0.34"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-1.0.34.tgz#125820e34bc842d2f2aaafafe4c2916ee32c157c"
   dependencies:
@@ -2488,6 +2495,13 @@ through2@2.0.3, through2@^2.0.0, through2@^2.0.1:
     readable-stream "^2.1.5"
     xtend "~4.0.1"
 
+through2@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/through2/-/through2-0.5.1.tgz#dfdd012eb9c700e2323fd334f38ac622ab372da7"
+  dependencies:
+    readable-stream "~1.0.17"
+    xtend "~3.0.0"
+
 through2@^0.6.1:
   version "0.6.5"
   resolved "https://registry.yarnpkg.com/through2/-/through2-0.6.5.tgz#41ab9c67b29d57209071410e1d7a7a968cd3ad48"
@@ -2717,6 +2731,10 @@ wrappy@1:
 "xtend@>=4.0.0 <4.1.0-0", xtend@~4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.1.tgz#a5c6d532be656e23db820efb943a1f04998d63af"
+
+xtend@~3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/xtend/-/xtend-3.0.0.tgz#5cce7407baf642cba7becda568111c493f59665a"
 
 y18n@^3.2.1:
   version "3.2.1"
