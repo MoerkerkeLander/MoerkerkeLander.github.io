@@ -35,6 +35,13 @@
         line-height: 55px; 
     }
 
+    p{    
+        text-align: center;
+        font-size: 1.8rem;
+        color: $white;
+        font-weight: 400;
+    }
+
     svg{
         margin: 0 auto;
         width: 100px;
@@ -45,7 +52,7 @@
     }
 }
 
-.btnNewQuestion{
+.btnResponse{
     height: 60px;
     margin: 0px auto;
     width: 300px;
@@ -62,7 +69,7 @@
 }
 
 @media screen and ( max-width: 580px ) {
-    .btnNewQuestion{
+    .btnResponse{
         width: 95%;
     }
 }

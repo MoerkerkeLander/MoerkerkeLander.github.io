@@ -1,3 +1,5 @@
+'use strict';
+
 // API SETTINGS
 var _AMOUNT_QUESTIONS = 5;
 
@@ -198,6 +200,7 @@ function hideOtherContainersButQuestion() {
 function showQuestion() {
 	hideOtherContainersButQuestion();
 	var question = arrQuestions[0];
+	console.log(question);
 
 	main__content__question.empty();
 	main__content__question.append('<div class="question__card"><p class="question__card__category">' + question['category'] + '</p><p class="question__card__question">' + question['question'] + '</p></div>');
@@ -238,10 +241,10 @@ function checkQuestion(pSelected, pCorrect) {
 		showCorrect();
 	}
 	else {
-		showIncorrect();
+		showIncorrect(pCorrect);
 	}
 
-	$('.btnNewQuestion').click(newQuestion);
+	$('.btnResponse').click(newQuestion);
 }
 
 function hideQuestion() {
@@ -263,18 +266,21 @@ function showCorrect() {
 	main__content__response.append(
 		$('<?xml version="1.0" encoding="UTF-8"?><svg viewBox="0 0 148.11 119.31" xmlns="http://www.w3.org/2000/svg"><defs><style>.svgcolor{fill:#cecece;}</style></defs><g data-name="Layer 2"><g data-name="Eindwerk"><g data-name="QuestionSucces"><polygon class="svgcolor" points="125.98 0 50.94 75.05 22.12 46.24 0 68.36 28.81 97.17 28.8 97.18 50.92 119.31 148.11 22.12"/></g></g></g></svg>'),
 		$('<h1/>', { text: getRandomResponse(responseCorr) }),
-		$('<button/>', { class: 'btnNewQuestion', text: 'New question!' })
+		$('<button/>', { class: 'btnResponse', text: 'New question!' })
 	);
 
 	main__content.addClass('correct');
 }
 
 // SHOW FAIL
-function showIncorrect() {
+function showIncorrect(pCorrect) {
 	main__content__response.append(
 		$('<?xml version="1.0" encoding="UTF-8"?><svg viewBox="0 0 119.7 120.7" xmlns="http://www.w3.org/2000/svg"><defs><style>.svgcolor{fill:#aa1818;}</style></defs><title>Asset 10</title><g data-name="Layer 2"><g data-name="Eindwerk"><g data-name="QuestionSucces2"><polygon class="svgcolor" points="119.7 23.13 97.57 1 60.35 38.22 22.13 0 0 22.13 38.22 60.35 0 98.57 22.13 120.7 60.35 82.48 97.57 119.7 119.7 97.57 82.48 60.35"/></g></g></g></svg>'),
-		$('<h1/>', { text: getRandomResponse(responseInCorr) }),
-		$('<button/>', { class: 'btnNewQuestion', text: 'Try again!' })
+		$('<div/>').append(
+			$('<h1/>', { text: getRandomResponse(responseInCorr) }),
+			$('<p/>', { text: 'The correct answer was: ' + pCorrect })
+		),
+		$('<button/>', { class: 'btnResponse', text: 'Try again!' })
 	);
 
 	main__content.addClass('incorrect');
