@@ -276,11 +276,12 @@ function showCorrect() {
 function showIncorrect(pCorrect) {
 	main__content__response.append(
 		$('<?xml version="1.0" encoding="UTF-8"?><svg viewBox="0 0 119.7 120.7" xmlns="http://www.w3.org/2000/svg"><defs><style>.svgcolor{fill:#aa1818;}</style></defs><title>Asset 10</title><g data-name="Layer 2"><g data-name="Eindwerk"><g data-name="QuestionSucces2"><polygon class="svgcolor" points="119.7 23.13 97.57 1 60.35 38.22 22.13 0 0 22.13 38.22 60.35 0 98.57 22.13 120.7 60.35 82.48 97.57 119.7 119.7 97.57 82.48 60.35"/></g></g></g></svg>'),
+		$('<canvas/>', { height: 160}),
 		$('<div/>').append(
 			$('<h1/>', { text: getRandomResponse(responseInCorr) }),
 			$('<p/>', { text: 'The correct answer was: ' + pCorrect })
 		),
-		$('<button/>', { class: 'btnResponse', text: 'Try again!' })
+		$('<button/>', { class: 'btnResponse', text: 'New question!'})
 	);
 
 	main__content.addClass('incorrect');

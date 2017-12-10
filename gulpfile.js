@@ -45,6 +45,7 @@ gulp.task('css', function(){
 gulp.task('script', function () {
     gulp.src([
 		'node_modules/jquery/dist/jquery.min.js',
+		'script/googleanalytics/ga.js',
     	'script/*.js'
     ])
 	.pipe(uglify().on('error', function (e) {
